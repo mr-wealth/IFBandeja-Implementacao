@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import {useNavigate} from 'react-router-dom'
+import axios from 'axios';
 
 import { FaUserAlt, FaLock } from 'react-icons/fa';
 
@@ -10,30 +11,36 @@ import { Input } from '../../components/Input';
 
 import { Container, Form, Logo } from './styles';
 
+const API_URL = 'http://127.0.0.1:8000/api/login/';
+
 const Login = () => {
 
-  const [prontuario, setProntuario] = useState('');
+  const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [error, setError] = useState('');
 
   const navigate = useNavigate();
 
-  //Quando BackEnd Estiver Disponivel Alterar essa função
-  const handleOnSubmit = (event) => {
+  const handleOnSubmit = async (event) => {
     
     event.preventDefault();
 
-    if (!prontuario || !senha) {
-      setError('Por favor, preencha todos os campos.');
-      return;
-    }
+    try{
+      const response = await axios.post(`${API_URL}`, {
+        email: email,
+        password: senha
+      });
 
-    if(prontuario === "admin" && senha === '123'){
-      navigate('/home')
-      return;
-    }
+      const {access, refresh } = response.data;
 
-    setError('Prontuário ou senha inválidos !')
+      localStorage.setItem('acessToken', access);
+      localStorage.setItem('refreshToken', refresh);
+
+      navigate('/home');
+
+    } catch (error) {
+      setError(error.message);
+    }
   }
 
   return (
@@ -42,8 +49,8 @@ const Login = () => {
       <Logo src={logo} alt='Imagem da Logo'/>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <Form onSubmit={handleOnSubmit}>
-      <Input name="prontuario" label="Prontuario" type="text" placeholder="Digite seu prontuario" value={prontuario}
-      onChange = {e => setProntuario(e.target.value)} autoComplete="username" icon={FaUserAlt}/>
+      <Input name="prontuario" label="Email" type="text" placeholder="Digite seu e-mail" value={email}
+      onChange = {e => setEmail(e.target.value)} autoComplete="username" icon={FaUserAlt}/>
       <Input name="senha" label="Senha" type="password" placeholder="Digite sua senha" value={senha}
       onChange = {e => setSenha(e.target.value)} autoComplete="current-password" icon={FaLock}/>
       <Button type="submit" >Acessar</Button>
