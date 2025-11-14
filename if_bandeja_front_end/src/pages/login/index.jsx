@@ -39,7 +39,11 @@ const Login = () => {
       navigate('/home');
 
     } catch (error) {
-      setError(error.message);
+      if(error.message === "Network Error"){
+        setError("Houve algum erro com o servidor tente novamente mais tarde!")
+        return
+      }
+      setError("Credenciais Invalidas");
     }
   }
 

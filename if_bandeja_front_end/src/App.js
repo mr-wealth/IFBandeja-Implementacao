@@ -9,6 +9,8 @@ import { GlobalStyle } from './styles/global';
 import { ThemeProvider } from 'styled-components';
 import { lightTheme, darkTheme } from './styles/theme';
 import { FaMoon, FaSun } from 'react-icons/fa';
+import ProtectedRoute from './ProtectedRoute';
+import Inexistente from './pages/inexistente';
 
 function App() {
 
@@ -36,7 +38,10 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />}/>
-          <Route path="/home" element={<Home />}/>
+          <Route element={<ProtectedRoute />}>
+            <Route path="/home" element={<Home />}/>
+          </Route>
+          <Route path="*" element={<Inexistente />}/>
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
