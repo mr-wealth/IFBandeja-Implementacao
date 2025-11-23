@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle, styled } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
   * {
@@ -24,3 +24,32 @@ export const GlobalStyle = createGlobalStyle`
     font-weight: 700; 
   }
 `;
+
+export const HeaderActionButton = styled.button`
+  position: fixed;
+  top: 20px;      
+  right: 144px;   
+  width: 40px;
+  height: 40px;
+  z-index: 999;
+
+  border-radius: 50%;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.2); 
+  color: ${({ theme }) => theme.text};
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  svg {
+    font-size: 22px;
+  }
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+`;
+
