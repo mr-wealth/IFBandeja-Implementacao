@@ -142,35 +142,6 @@ export const MenuCard = styled.div`
   }
 `;
 
-export const ModalOverlay = styled.div`
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-`;
-
-export const ModalContent = styled.div`
-  background: ${({ theme }) => theme.background};
-  color: ${({ theme }) => theme.text};
-  padding: 32px;
-  border-radius: 16px;
-  width: 90%;
-  max-width: 400px;
-  position: relative;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-
-  h2 { margin-bottom: 16px; color: ${({ theme }) => theme.green}; }
-  
-  .buttons {
-    display: flex;
-    gap: 16px;
-    margin-top: 24px;
-  }
-`;
-
 export const Footer = styled.footer`
   background-color: #8B0000;
   padding: 16px;

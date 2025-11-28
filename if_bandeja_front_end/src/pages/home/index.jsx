@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { 
-  Container, Header, Content, TitleSection, CardGrid, MenuCard, Footer, ModalOverlay, ModalContent 
+  Container, Header, Content, TitleSection, CardGrid, MenuCard, Footer
 } from './styles';
 
 import { FaUser, FaWallet, FaLeaf, FaDrumstickBite, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import {Button} from '../../components/Button'; 
-
+import ModalFormulario from '../../components/ModalFormulario';
 
 import logoImg from '../../assets/logo.png';
 
@@ -75,22 +74,12 @@ function Home() {
       </Footer>
 
       {selectedDay && (
-        <ModalOverlay onClick={() => setSelectedDay(null)}>
-          <ModalContent onClick={(e) => e.stopPropagation()}>
-            <h2>Reserva para o dia {selectedDay.day}</h2>
-            <p>Você deseja confirmar sua refeição para este dia?</p>
-            
-            <div style={{ marginTop: '16px', background: '#eee', padding: '10px', borderRadius: '8px', color: '#333' }}>
-              <strong>Opção Principal:</strong> {selectedDay.principal.join(', ')}
-            </div>
-
-            <div className="buttons">
-              <Button onClick={() => alert('Reserva Confirmada!')}>Confirmar</Button>
-              <Button variant="negative" onClick={() => setSelectedDay(null)}>Cancelar</Button>
-            </div>
-          </ModalContent>
-        </ModalOverlay>
-      )}
+      <ModalFormulario 
+        dia={selectedDay} 
+        onClose={() => setSelectedDay(null)} 
+        //onConfirm={} 
+      />
+    )}
 
     </Container>
   );

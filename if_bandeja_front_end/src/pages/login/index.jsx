@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {useNavigate} from 'react-router-dom'
-import axios from 'axios';
+import api from '../../api'
 
 import { FaUserAlt, FaLock } from 'react-icons/fa';
 
@@ -11,8 +11,6 @@ import { Input } from '../../components/Input';
 
 import { Container, Form, Logo } from './styles';
 
-const API_URL = 'http://127.0.0.1:8000/api/login/';
-
 const Login = () => {
 
   const [email, setEmail] = useState('');
@@ -21,19 +19,26 @@ const Login = () => {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const token = localStorage.getItem('accessToken');
+    if (token) {
+      navigate('/home');
+    }
+  }, [navigate]);
+
   const handleOnSubmit = async (event) => {
     
     event.preventDefault();
 
     try{
-      const response = await axios.post(`${API_URL}`, {
+      const response = await api.post('/login/', {
         email: email,
         password: senha
       });
 
       const {access, refresh } = response.data;
 
-      localStorage.setItem('acessToken', access);
+      localStorage.setItem('accessToken', access);
       localStorage.setItem('refreshToken', refresh);
 
       navigate('/home');

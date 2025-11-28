@@ -1,6 +1,6 @@
-/*import axios from 'axios';
+import axios from 'axios';
 
-const API_URL = 'http://127.0.0.1:8000/api/';
+const API_URL = 'http://127.0.0.1:8000/api';
 
 const api = axios.create({
   baseURL: API_URL,
@@ -29,12 +29,12 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    if (error.response.status === 401 && !originalRequest._retry) {
+    if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
       try {
         const refreshToken = localStorage.getItem('refreshToken');
-        const rs = await axios.post(`${API_URL}/api/token/refresh/`, {
+        const rs = await axios.post(`${API_URL}/token/refresh/`, {
           refresh: refreshToken,
         });
 
@@ -58,4 +58,3 @@ api.interceptors.response.use(
 );
 
 export default api;
-*/
