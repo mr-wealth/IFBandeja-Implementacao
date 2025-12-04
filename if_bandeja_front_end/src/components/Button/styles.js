@@ -4,8 +4,11 @@ const colors = {
   primary: '#28a745', 
   primaryHover: '#218838',
 
-  negative: '#6c757d',
-  negativeHover: '#5a6268',
+  cancelar: '#6c757d',
+  cancelarHover: '#5a6268',
+
+  deletar: '#ef4444',
+  deletarHover: '#dc2626',
 
   disabled: '#CCCCCC',
   text: '#FFFFFF',
@@ -23,15 +26,28 @@ export const Container = styled.button`
 
   transition: background-color 0.2s ease-in-out, transform 0.1s;
 
-  background-color: ${(props) =>
-    props.variant === 'negative' ? colors.negative : colors.primary};
+  background-color: ${(props) => {
+    switch (props.variant) {
+        case 'cancelar':
+            return colors.cancelar;
+        case 'deletar':
+            return colors.deletar;
+        default:
+            return colors.primary;
+    }
+  }};
 
   &:hover:not(:disabled) {
-    background-color: ${(props) =>
-      props.variant === 'negative'
-        ? colors.negativeHover
-        : colors.primaryHover};
-  }
+    background-color: ${(props) => {
+      switch (props.variant) {
+          case 'cancelar':
+              return colors.cancelarHover;
+          case 'deletar':
+              return colors.deletarHover;
+          default:
+              return colors.primaryHover;
+      }
+    }};
 
   &:active:not(:disabled) {
     transform: scale(0.98); /* Efeito de clique */
