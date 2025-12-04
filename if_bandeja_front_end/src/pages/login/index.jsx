@@ -36,11 +36,12 @@ const Login = () => {
         senha: senha
       });
 
-      const {access, refresh } = response.data;
+      const {access, refresh, usuario } = response.data;
 
       localStorage.setItem('accessToken', access);
       localStorage.setItem('refreshToken', refresh);
       localStorage.setItem('loginTime', Date.now());
+      localStorage.setItem('usuario_id', usuario.id);
 
       navigate('/home');
 
