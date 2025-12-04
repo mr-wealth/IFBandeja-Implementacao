@@ -8,23 +8,23 @@ import {
 } from './styles';
 import { Button } from '../Button';
 
-const ModalFormulario = ({ dia, onClose, onSuccess }) => {
+// Adicionei usuarioId nas props recebidas
+const ModalFormulario = ({ dia, usuarioId, onClose, onSuccess }) => {
 
   const { id: cardapioId, meuPedido, podeAlterar, day, monthName } = dia;
 
   const modoEdicao = !!meuPedido; 
-  
   const modoLeitura = modoEdicao && !podeAlterar;
 
-  const [opcao, setOpcao] = useState('Principal');
+  // MUDANÇA: Estado agora é numérico (1 = Principal, 2 = Vegetariano)
+  const [tipo, setTipo] = useState(1); 
   const [turno, setTurno] = useState('Almoco');
   const [loading, setLoading] = useState(false);
 
-  const USUARIO_ID = 1; 
-
   useEffect(() => {
     if (meuPedido) {
-      setOpcao(meuPedido.opcao || 'Principal');
+      // Verifica se o backend já retorna 'tipo', senão usa 1 como padrão
+      setTipo(meuPedido.tipo || 1); 
       setTurno(meuPedido.turno || 'Almoco');
     }
   }, [meuPedido]);
@@ -36,8 +36,10 @@ const ModalFormulario = ({ dia, onClose, onSuccess }) => {
       setLoading(true);
 
       const payload = {
-        usuario: USUARIO_ID,
+        usuario: usuarioId, // Usa a prop passada pelo Home
         cardapio: cardapioId, 
+        tipo: tipo, // Envia 1 ou 2
+        turno: turno,
         status: "Solicitado",
         retirado: false
       };
@@ -61,8 +63,10 @@ const ModalFormulario = ({ dia, onClose, onSuccess }) => {
       setLoading(true);
 
       const payload = {
-        usuario: USUARIO_ID,
+        usuario: usuarioId,
         cardapio: cardapioId,
+        tipo: tipo, // Envia 1 ou 2
+        turno: turno,
         status: "Solicitado",
         retirado: false
       };
@@ -87,7 +91,6 @@ const ModalFormulario = ({ dia, onClose, onSuccess }) => {
 
     try {
       setLoading(true);
-      
       await api.delete(`/pedido/${meuPedido.id}/`);
       
       toast.info('Pedido cancelado e removido.');
@@ -121,14 +124,28 @@ const ModalFormulario = ({ dia, onClose, onSuccess }) => {
         )}
 
         <FormGroup>
-          <Label>Opção</Label>
+          <Label>Opção do Prato</Label>
           <RadioGroup>
-            <RadioOption checked={opcao === 'Principal'} disabled={modoLeitura}>
-              <input type="radio" value="Principal" checked={opcao === 'Principal'} onChange={(e) => setOpcao(e.target.value)} disabled={modoLeitura} />
+            {/* MUDANÇA: value agora é numérico e verificamos com integers */}
+            <RadioOption checked={tipo === 1} disabled={modoLeitura}>
+              <input 
+                type="radio" 
+                value={1} 
+                checked={tipo === 1} 
+                onChange={(e) => setTipo(Number(e.target.value))} 
+                disabled={modoLeitura} 
+              />
               🍖 Principal
             </RadioOption>
-            <RadioOption checked={opcao === 'Vegetariano'} disabled={modoLeitura}>
-              <input type="radio" value="Vegetariano" checked={opcao === 'Vegetariano'} onChange={(e) => setOpcao(e.target.value)} disabled={modoLeitura} />
+            
+            <RadioOption checked={tipo === 2} disabled={modoLeitura}>
+              <input 
+                type="radio" 
+                value={2} 
+                checked={tipo === 2} 
+                onChange={(e) => setTipo(Number(e.target.value))} 
+                disabled={modoLeitura} 
+              />
               🥗 Vegetariano
             </RadioOption>
           </RadioGroup>
