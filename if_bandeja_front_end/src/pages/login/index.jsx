@@ -32,14 +32,15 @@ const Login = () => {
 
     try{
       const response = await api.post('/login/', {
-        email: email,
-        password: senha
+        prontuario: email,
+        senha: senha
       });
 
       const {access, refresh } = response.data;
 
       localStorage.setItem('accessToken', access);
       localStorage.setItem('refreshToken', refresh);
+      localStorage.setItem('loginTime', Date.now());
 
       navigate('/home');
 

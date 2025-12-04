@@ -7,53 +7,6 @@ export const Container = styled.div`
   background-color: ${({ theme }) => theme.background};
 `;
 
-export const Header = styled.header`
-  width: 100%;
-  height: 80px;
-  padding: 0 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  background: linear-gradient(135deg, #28a745 85%, #8B0000 85%);
-  color: ${({ theme }) => theme.text};
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-
-  .logo-area {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 24px;
-    font-weight: bold;
-    
-    img { 
-        height: 40px; 
-        filter: ${({ theme }) => theme.logoFilter};
-    }
-  }
-
-  .actions {
-    display: flex;
-    gap: 16px;
-    
-    button {
-      background: rgba(255,255,255,0.2);
-      border: none;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      display: fle#x;
-      align-items: center;
-      justify-content: center;
-      color: ${({ theme }) => theme.text};;
-      cursor: pointer;
-      transition: background 0.2s;
-
-      &:hover { background: rgba(255,255,255,0.3); }
-    }
-  }
-`;
-
 export const Content = styled.main`
   flex: 1;
   padding: 24px;
@@ -85,6 +38,11 @@ export const TitleSection = styled.div`
       color: ${({ theme }) => theme.text};
       font-size: 24px;
       cursor: pointer;
+      
+      &:hover {
+        transform: scale(1.2);
+        color: ${({ theme }) => theme.primary || '#28a745'}; 
+      }
     }
   }
 `;
@@ -140,12 +98,4 @@ export const MenuCard = styled.div`
     h3 { font-size: 16px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;}
     ul { list-style: none; margin-bottom: 16px; font-size: 13px; opacity: 0.8; }
   }
-`;
-
-export const Footer = styled.footer`
-  background-color: #8B0000;
-  padding: 16px;
-  text-align: center;
-  color: ${({ theme }) => theme.text};;
-  font-size: 14px;
 `;

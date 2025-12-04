@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { 
-  Container, Header, Content, TitleSection, CardGrid, MenuCard, Footer
-} from './styles';
+import { Container, Content, TitleSection, CardGrid, MenuCard } from './styles';
 
-import { FaUser, FaWallet, FaLeaf, FaDrumstickBite, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { FaLeaf, FaDrumstickBite, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import ModalFormulario from '../../components/ModalFormulario';
 
-import logoImg from '../../assets/logo.png';
+import { Header } from '../../components/Header';
+import { Footer } from '../../components/Footer';
 
 function Home() {
 
@@ -22,18 +21,7 @@ function Home() {
 
   return (
     <Container>
-      <Header>
-        <div className="logo-area">
-          <img src={logoImg} alt="Logo" />
-          <span>IFBandeja</span>
-        </div>
-        
-        <div className="actions">
-          <button title="Perfil"><FaUser /></button>
-          <button title="Carteira"><FaWallet /></button>
-        </div>
-      </Header>
-
+      <Header />
       <Content>
         <TitleSection>
           <h1>Faça Sua Reserva</h1>
@@ -69,9 +57,7 @@ function Home() {
         </CardGrid>
       </Content>
 
-      <Footer>
-        IFBandeja, 2025 - Todos os direitos reservados.
-      </Footer>
+      <Footer />
 
       {selectedDay && (
       <ModalFormulario 
