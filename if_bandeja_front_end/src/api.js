@@ -13,7 +13,7 @@ const realizarLogout = () => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('loginTime'); 
-    window.location.href = '/login';
+    window.location.href = '/';
 };
 
 api.interceptors.request.use(
@@ -52,7 +52,9 @@ api.interceptors.response.use(
     return response;
   },
   async (error) => {
-    if (error.response?.status === 401) {
+    const originalRequest = error.config;
+
+    if (error.response?.status === 401 && !originalRequest.url.endsWith('/login/')) {
       console.error("Token inválido ou expirado no servidor.");
       realizarLogout();
     }
