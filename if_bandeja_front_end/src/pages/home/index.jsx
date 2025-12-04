@@ -27,7 +27,7 @@ function Home() {
     if (idSalvo) {
       setUsuarioId(Number(idSalvo));
     } else {
-      toast.error("Usuário não identificado. Faça login novamente.");
+      // Se não tiver ID, redireciona ou avisa (opcional)
       setLoading(false);
     }
   }, []);
@@ -88,6 +88,7 @@ function Home() {
         }
 
         const diffDias = differenceInCalendarDays(date, hoje);
+        // Exemplo: Pode alterar se a diferença for maior ou igual a 2 dias
         const podeAlterar = diffDias >= 2;
 
         return {
@@ -158,6 +159,7 @@ function Home() {
             <CardGrid>
             {days.map((item) => {
                 const isClickable = item.temCardapio && (item.podeAlterar || item.meuPedido);
+                // Se tiver pedido, borda verde. Se não, transparente.
                 const borderStyle = item.meuPedido ? '2px solid #28a745' : '1px solid transparent';
 
                 return (
@@ -171,7 +173,6 @@ function Home() {
                             filter: (item.temCardapio && !item.podeAlterar && !item.meuPedido) ? 'grayscale(40%)' : 'none'
                         }}
                     >
-                        {/* ... (Resto do layout dos Cards igual ao anterior) ... */}
                         <div className="card-header">
                             <div className="date-circle">{item.day}</div>
                             <small>{item.monthName}</small> 
@@ -230,7 +231,7 @@ function Home() {
       {selectedDay && (
         <ModalFormulario 
           dia={selectedDay} 
-          usuarioId={usuarioId} // 5. Passamos o ID para o Modal também!
+          usuarioId={usuarioId} 
           onClose={() => setSelectedDay(null)} 
           onSuccess={handleRefresh} 
         />

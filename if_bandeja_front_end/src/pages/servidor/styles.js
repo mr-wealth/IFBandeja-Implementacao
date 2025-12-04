@@ -4,7 +4,6 @@ export const Container = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  
 
   background-color: ${({ theme }) => theme.background};
   color: ${({ theme }) => theme.text};
@@ -22,7 +21,7 @@ export const Content = styled.main`
 
 export const TitleSection = styled.div`
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 
   h1 {
     font-size: 2rem;
@@ -45,6 +44,39 @@ export const TitleSection = styled.div`
   }
 `;
 
+export const DateFilter = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 30px;
+
+  button {
+    background: transparent;
+    color: ${({ theme }) => theme.textSecondary || '#aaa'};
+    border: 1px solid ${({ theme }) => theme.border || '#444'};
+    padding: 8px 24px;
+    border-radius: 50px; /* Borda arredondada estilo "pill" */
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+
+    &:hover {
+      background: ${({ theme }) => theme.cardBackground || '#252525'};
+      color: ${({ theme }) => theme.text};
+      border-color: #666;
+    }
+
+    &.active {
+      background: ${({ theme }) => theme.primary || '#28a745'};
+      border-color: ${({ theme }) => theme.primary || '#28a745'};
+      color: #fff;
+      font-weight: bold;
+      box-shadow: 0 0 10px rgba(40, 167, 69, 0.3);
+    }
+  }
+`;
+
 export const OrderList = styled.div`
   display: flex;
   flex-direction: column;
@@ -63,18 +95,18 @@ export const OrderCard = styled.div`
   
   padding: 20px;
   border-radius: 8px;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 
   &:hover {
     transform: translateX(5px);
     background-color: ${({ theme }) => theme.border || '#252525'};
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   }
 
-  /* Área da Esquerda: ID e Hora */
   .order-info {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 8px;
 
     h3 {
       font-size: 1.2rem;
@@ -82,40 +114,73 @@ export const OrderCard = styled.div`
       color: ${({ theme }) => theme.text};
     }
 
-    .timestamp {
-      font-size: 0.85rem;
-      color: #888;
+    .meta-info {
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 15px;
+      
+      span {
+        font-size: 0.85rem;
+        color: #888;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
     }
   }
 
-  /* Área da Direita: O Pedido */
   .order-detail {
     text-align: right;
+    margin-right: 20px; 
+    flex: 1; 
 
     strong {
       display: block;
       font-size: 1.1rem;
       color: ${({ typeColor }) => typeColor || '#fff'};
       margin-bottom: 4px;
+      text-transform: capitalize;
     }
 
     span {
-      font-size: 0.9rem;
-      color: #aaa;
+      font-size: 0.95rem;
+      color: #ccc;
+      display: block;
+      
+      max-width: 300px; 
+      margin-left: auto; 
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 
-  /* Responsividade para celular */
-  @media (max-width: 500px) {
+  .status-icon {
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 600px) {
     flex-direction: column;
     align-items: flex-start;
     gap: 15px;
+    padding: 15px;
 
     .order-detail {
       text-align: left;
+      margin-right: 0;
+      margin-left: 0;
+      
+      span {
+        margin-left: 0;
+        white-space: normal; 
+      }
+    }
+
+    .status-icon {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        opacity: 0.2;
     }
   }
 `;
