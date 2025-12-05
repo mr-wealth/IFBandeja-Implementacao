@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from 'react-router-dom';
 
 export const Container = styled.header`
   width: 100%;
@@ -64,7 +65,7 @@ export const ProfileContainer = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
-      color: inherit; /* Pega a cor do tema */
+      color: inherit; 
       cursor: pointer;
       transition: background 0.2s;
       
@@ -120,5 +121,11 @@ export const MenuItem = styled.button`
 
   &:hover {
     background: ${props => props.isLogout ? '#ffebee' : '#f5f5f5'} !important;
+  }
+`;
+
+export const LogoLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;  
   }
 `;

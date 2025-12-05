@@ -42,6 +42,7 @@ const Login = () => {
       localStorage.setItem('refreshToken', refresh);
       localStorage.setItem('loginTime', Date.now());
       localStorage.setItem('usuario_id', usuario.id);
+      localStorage.setItem('tipo', usuario.tipo);
 
       navigate('/home');
 

@@ -28,7 +28,7 @@ function Admin() {
       const year = format(currentDate, 'yyyy');
 
       const response = await api.get(`/cardapio?mes=${month}&ano=${year}`);
-      setApiData(response.data); 
+      setApiData(response.data);
     } catch (error) {
       console.error("Erro ao buscar cardápios", error);
       toast.error("Erro ao carregar dados.");
