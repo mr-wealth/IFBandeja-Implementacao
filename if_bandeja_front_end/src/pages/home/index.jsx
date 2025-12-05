@@ -27,7 +27,6 @@ function Home() {
     if (idSalvo) {
       setUsuarioId(Number(idSalvo));
     } else {
-      // Se não tiver ID, redireciona ou avisa (opcional)
       setLoading(false);
     }
   }, []);
@@ -72,7 +71,9 @@ function Home() {
         
         let pedidoExistente = null;
         if (itemCardapio) {
-            pedidoExistente = todosPedidos.find(pedido => pedido.cardapio === itemCardapio.id);
+            pedidoExistente = todosPedidos.find(pedido => 
+                pedido.cardapio === itemCardapio.id && pedido.usuario === usuarioId
+            );
         }
 
         let principalArr = [];
@@ -88,7 +89,7 @@ function Home() {
         }
 
         const diffDias = differenceInCalendarDays(date, hoje);
-        // Exemplo: Pode alterar se a diferença for maior ou igual a 2 dias
+
         const podeAlterar = diffDias >= 2;
 
         return {
@@ -97,6 +98,7 @@ function Home() {
           day: format(date, 'dd'),
           monthName: format(date, 'MMM', { locale: ptBR }), 
           fullDate: dataFormatadaAPI,
+          price: itemCardapio?.preco || '',
           
           principal: principalArr,
           veg: vegArr,
@@ -159,7 +161,7 @@ function Home() {
             <CardGrid>
             {days.map((item) => {
                 const isClickable = item.temCardapio && (item.podeAlterar || item.meuPedido);
-                // Se tiver pedido, borda verde. Se não, transparente.
+
                 const borderStyle = item.meuPedido ? '2px solid #28a745' : '1px solid transparent';
 
                 return (
@@ -175,7 +177,7 @@ function Home() {
                     >
                         <div className="card-header">
                             <div className="date-circle">{item.day}</div>
-                            <small>{item.monthName}</small> 
+                            <small style={{ textTransform: 'capitalize', fontSize: '1.2rem' }}>{item.monthName}</small> 
                             
                             <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center' }}>
                                 {item.meuPedido && (

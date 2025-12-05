@@ -9,6 +9,7 @@ import { Login } from './pages/login';
 import { Home } from './pages/home';
 import { Admin } from './pages/admin'
 import { Servidor } from './pages/servidor'
+import {HistoricoUsuario} from './pages/historico'
 
 import { GlobalStyle, HeaderActionButton } from './styles/global';
 import { ThemeProvider } from 'styled-components';
@@ -46,10 +47,15 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />}/>
-          <Route element={<ProtectedRoute />}>
+          <Route element={<ProtectedRoute allowedRoles={[1,2,3]} />}>
             <Route path="/home" element={<Home />}/>
-            <Route path="/admin" element={<Admin />}/>
+            <Route path="/historico" element={<HistoricoUsuario />}/>
+          </Route>
+          <Route element={<ProtectedRoute allowedRoles={[2, 3]} />}>
             <Route path="/servidor" element={<Servidor />}/>
+          </Route>
+          <Route element={<ProtectedRoute allowedRoles={[3]} />}>
+            <Route path="/admin" element={<Admin />}/>
           </Route>
           <Route path="*" element={<Inexistente />}/>
         </Routes>

@@ -8,37 +8,36 @@ import {
 } from './styles';
 import { Button } from '../Button';
 
-// Adicionei usuarioId nas props recebidas
 const ModalFormulario = ({ dia, usuarioId, onClose, onSuccess }) => {
 
-  const { id: cardapioId, meuPedido, podeAlterar, day, monthName } = dia;
+  const { id: cardapioId, meuPedido, podeAlterar, day, monthName, price } = dia;
 
   const modoEdicao = !!meuPedido; 
   const modoLeitura = modoEdicao && !podeAlterar;
 
-  // MUDANÇA: Estado agora é numérico (1 = Principal, 2 = Vegetariano)
+
+
   const [tipo, setTipo] = useState(1); 
   const [turno, setTurno] = useState('Almoco');
   const [loading, setLoading] = useState(false);
 
+  const precoFinal = turno === 'Ambos' ? price * 2 : price;
+
   useEffect(() => {
     if (meuPedido) {
-      // Verifica se o backend já retorna 'tipo', senão usa 1 como padrão
       setTipo(meuPedido.tipo || 1); 
       setTurno(meuPedido.turno || 'Almoco');
     }
   }, [meuPedido]);
-
-  const preco = turno === 'Ambos' ? 6.00 : 3.00;
 
   const handleSalvar = async () => {
     try {
       setLoading(true);
 
       const payload = {
-        usuario: usuarioId, // Usa a prop passada pelo Home
+        usuario: usuarioId, 
         cardapio: cardapioId, 
-        tipo: tipo, // Envia 1 ou 2
+        tipo: tipo, 
         turno: turno,
         status: "Solicitado",
         retirado: false
@@ -65,7 +64,7 @@ const ModalFormulario = ({ dia, usuarioId, onClose, onSuccess }) => {
       const payload = {
         usuario: usuarioId,
         cardapio: cardapioId,
-        tipo: tipo, // Envia 1 ou 2
+        tipo: tipo, 
         turno: turno,
         status: "Solicitado",
         retirado: false
@@ -126,7 +125,6 @@ const ModalFormulario = ({ dia, usuarioId, onClose, onSuccess }) => {
         <FormGroup>
           <Label>Opção do Prato</Label>
           <RadioGroup>
-            {/* MUDANÇA: value agora é numérico e verificamos com integers */}
             <RadioOption checked={tipo === 1} disabled={modoLeitura}>
               <input 
                 type="radio" 
@@ -162,7 +160,7 @@ const ModalFormulario = ({ dia, usuarioId, onClose, onSuccess }) => {
 
         <PriceBox>
           <span>Total:</span>
-          <strong>R$ {preco.toFixed(2).replace('.', ',')}</strong>
+          <strong>R$ {precoFinal ? Number(precoFinal).toFixed(2).replace('.', ',') : '0,00'}</strong>
         </PriceBox>
 
         <Footer>
